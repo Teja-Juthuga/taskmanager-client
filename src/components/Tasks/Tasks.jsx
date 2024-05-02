@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import { useFormik } from "formik";
 import { format } from 'date-fns';
 import moment from "moment";
 import "./Tasks.css";
 
 export const Tasks = () => {
+    
 
     const [tasks, setTasks] = useState(
         [
@@ -24,8 +26,8 @@ export const Tasks = () => {
         axios.get('https://taskmanager-server-pi.vercel.app/tasks',
         {
             headers: {
-                'Authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNpdmEiLCJpYXQiOjE3MTQ1NjMzMjJ9.Zac4XsfuuqCU3G54rvxaCND6sh00bMxv5HMt4380c00'
-                }
+            'Authorization': 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNpdmEiLCJpYXQiOjE3MTQ1NjMzMjJ9.Zac4XsfuuqCU3G54rvxaCND6sh00bMxv5HMt4380c00'
+            }
         })
         .then(res => {
             setTasks(res.data);
@@ -35,6 +37,18 @@ export const Tasks = () => {
         })
         
     }, [])
+
+    const formik = useFormik({
+        initialValues: {
+            title: "",
+            description: "",
+            status: ""
+        },
+        validate: (values) => {},
+        onSubmit: (values) => {
+               console.log(values)
+        },
+    });
 
     return (
         <div className="container">
@@ -57,13 +71,13 @@ export const Tasks = () => {
                             </p>
                             <div className="d-flex justify-content-around">
                                 <div className="d-flex ">
-                                    <div className="dot-red"></div>
-                                    <p className="text-danger mt-2"> {task.status} </p>
+                                    <div className="dot bg-primary"></div>
+                                    <p className="text-primary mt-2"> {task.status} </p>
                                 </div>
                                 <div className="d-flex">
                                     <i
                                         type="button"
-                                        className="bi bi-pencil-square fs-4 me-3"
+                                        className="bi bi-pencil-square fs-4 me-3 text-secondary"
                                         data-bs-toggle="modal"
                                         data-bs-target={"#" + task.id}
                                     ></i>
@@ -76,6 +90,12 @@ export const Tasks = () => {
                                     </label>
                                 </div>
                                 <div className="d-flex ">
+                                    <i className="bi bi-trash3 fs-4 me-3 text-danger"></i>
+                                    <p className="mt-2 text-danger">
+                                        Delete
+                                    </p>
+                                </div>
+                                <div className="d-flex ">
                                     <i className="bi bi-calendar-event fs-4 me-3"></i>
                                     <p className="mt-2">
                                         Last Modified : {task.updated_at}
@@ -86,7 +106,7 @@ export const Tasks = () => {
                                 className="modal fade"
                                 id={task.id}
                                 tabIndex="-1"
-                                aria-labelledby="exampleModalLabel"
+                                aria-labelledby={"modalLabel" + tasks.id}
                                 aria-hidden="true"
                             >
                                 <div className="modal-dialog">
@@ -94,7 +114,7 @@ export const Tasks = () => {
                                         <div className="modal-header">
                                             <h1
                                                 className="modal-title fs-5"
-                                                id="exampleModalLabel"
+                                                id={"modalLabel" + tasks.id}
                                             >
                                                 {task.title}
                                             </h1>
@@ -105,7 +125,16 @@ export const Tasks = () => {
                                                 aria-label="Close"
                                             ></button>
                                         </div>
-                                        <div className="modal-body">...</div>
+                                        <div className="modal-body">
+                                            <h1> Yet to Code </h1>
+                                            {/* <form onSubmit={formik.handleSubmit}>
+                                                <dt> Title </dt>
+                                                <dd> 
+                                                    <input type="text" value={formik.values.title} />
+                                                </dd>
+                                                
+                                            </form> */}
+                                        </div>
                                         <div className="modal-footer">
                                             <button
                                                 type="button"
@@ -115,7 +144,7 @@ export const Tasks = () => {
                                                 Close
                                             </button>
                                             <button
-                                                type="button"
+                                                type="submit"
                                                 className="btn btn-primary"
                                             >
                                                 Save changes
@@ -127,7 +156,6 @@ export const Tasks = () => {
                         </div>
                     </div>
                 )
-                
             }
         </div>
     );

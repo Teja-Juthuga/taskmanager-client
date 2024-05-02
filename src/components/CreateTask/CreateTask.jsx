@@ -3,17 +3,9 @@ import { useFormik } from "formik";
 import moment from "moment";
 import axios from 'axios';
 import './CreateTask.css';
-
+import { Tasks } from "../Tasks/Tasks";
 export const CreateTask = () => {
-    const [taskDetails, setTaskDetails] = useState({
-        title : "",
-        description : "",
-        status : "",
-        assignee_id: 0,
-        created_at: "",
-        updated_at : ""
-
-    })
+    const [taskDetails, setTaskDetails] = useState({})
     const formik = useFormik({
         initialValues: {
             title: "",
@@ -48,9 +40,7 @@ export const CreateTask = () => {
             .then(res => console.log(res))
             .catch(err => console.log(err))
         }
-        
       }, [taskDetails]); 
-
     return (
         <div className="container-fluid mt-2 h-100">
             <div className="input-container mb-4">
@@ -84,6 +74,21 @@ export const CreateTask = () => {
                     </button>
                 </form>
             </div>
+            {/* <div>
+                { 
+                    taskDetails.length ? <Tasks/> : 
+                    <div> 
+                        <h2 className="text-center mt-4"> Please add Tasks to view... </h2>
+                    </div>
+                }
+            </div> */}
         </div>
     );
 };
+
+//         title : "",
+//         description : "",
+//         status : "",
+//         assignee_id: 0,
+//         created_at: "",
+//         updated_at : ""

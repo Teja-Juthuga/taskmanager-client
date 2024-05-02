@@ -9,9 +9,9 @@ import { Tasks } from "../Tasks/Tasks";
 export const LandingPage = () => {
 
     return (
-        <div className="container-fluid mt-2 h-100">
+        <div className="container-fluid mt-2 h-100">         
             <div> <CreateTask /></div>
-            <div><Tasks />  </div>
+            <div><Tasks/></div>
         </div>
     );
 };

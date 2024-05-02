@@ -1,10 +1,12 @@
 .dot {
     height: 8px;
     width: 8px;
-    border: solid 1px black;
+    border: solid 1px transparent;
     border-radius: 50%;
-    background-color: black;
+    background-color: transparent;
     margin: 6px;
+    margin-top: 18px;
+    margin-right: 9px;
 }
 
 .dot-yellow {
@@ -16,12 +18,12 @@
     margin-top: 18px;
     margin-right: 9px;
 }
-.dot-red {
+.dot-purple {
     height: 8px;
     width: 8px;
-    border: solid 1px red;
+    border: solid 1px purple;
     border-radius: 50%;
-    background-color: red;
+    background-color: purple;
     margin-top: 18px;
     margin-right: 9px;
 }
